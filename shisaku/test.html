@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ajax、PHP、MySQL</title>
+<link rel="stylesheet" href="">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+IDを入力:<input id="id_number" type="number"><br>
+
+<div id="result">
+ <p>数値を入力してボタンを押してください。</p>
+</div>
+<button id="bin">ボタン</button>
+
+
+
+<script>
+
+
+$(function(){
+
+ $('#bin').on('click',function(){
+
+  $.ajax({
+   url:"./side.php", //送信先
+   type:'POST', //送信方法
+   datatype: 'json', //受け取りデータの種類
+   data:{
+    'id' : $('#id_number').val()
+   }
+   })
+   
+   //Ajax通信が成功した時
+   .done( function(data) {
+   $('#result').append("<p>ID番号"+data[0].id+"は「"+data[0].name+"」さんです。<br>メールアドレスは「"+data[0].email+"」です。</p>");
+   console.log('通信成功');
+   console.log(data);
+  })
+  
+ //   Ajax通信が失敗した時
+   .fail( function(data) {
+   $('#result').append(data);
+   console.log('通信失敗');
+   console.log(data);
+   })
+ }); //#ajax click end
+
+}); //END
+
+
+
+   
+   </script>
+</body>
+</html>
+
+
+
